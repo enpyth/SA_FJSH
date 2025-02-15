@@ -1,13 +1,15 @@
 import { NextResponse } from 'next/server';
 import { deleteUserAuth } from '@/src/queries/delete';
-import { getUserAuthByEmail } from '@/src/queries/select';
+import { getUserProfile } from '@/src/queries/select';
 
 export async function GET(
   request: Request,
-  { params }: { params: { email: string } }
+  context: { params: Promise<{ email: string }> }
 ) {
   try {
-    const user = await getUserAuthByEmail(params.email);
+    const { email } = await context.params;
+    
+    const user = await getUserProfile(email);
     
     if (!user) {
       return NextResponse.json({ 
@@ -15,8 +17,7 @@ export async function GET(
       }, { status: 404 });
     }
 
-    const { password: _, ...userWithoutPassword } = user;
-    return NextResponse.json(userWithoutPassword);
+    return NextResponse.json(user);
   } catch (error: any) {
     return NextResponse.json({ 
       message: 'Error fetching user',
@@ -27,10 +28,12 @@ export async function GET(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { email: string } }
+  context: { params: Promise<{ email: string }> }
 ) {
   try {
-    const deletedUser = await deleteUserAuth(params.email);
+    const { email } = await context.params;
+
+    const deletedUser = await deleteUserAuth(email);
 
     if (!deletedUser) {
       return NextResponse.json({ 

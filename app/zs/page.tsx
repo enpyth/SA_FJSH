@@ -29,6 +29,11 @@ export default function TestPage() {
     introduction: ''
   });
 
+  // 添加查询相关状态
+  const [queryEmail, setQueryEmail] = useState('');
+  const [queryResult, setQueryResult] = useState<{name: string} | null>(null);
+  const [querying, setQuerying] = useState(false);
+
   // 注册用户
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,8 +87,59 @@ export default function TestPage() {
     }
   };
 
+  // 查询用户姓名
+  const handleQuery = async () => {
+    if (!queryEmail) return;
+    
+    setQuerying(true);
+    setQueryResult(null);
+
+    try {
+      const response = await fetch(`/api/users/${queryEmail}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setQueryResult({ name: data.name });
+      } else {
+        alert(data.message || '未找到用户');
+      }
+    } catch (error) {
+      alert('查询失败');
+    } finally {
+      setQuerying(false);
+    }
+  };
+
   return (
     <div className="p-6 max-w-2xl mx-auto">
+      {/* 查询区域 */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">查询用户</h2>
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <input
+              type="email"
+              value={queryEmail}
+              onChange={e => setQueryEmail(e.target.value)}
+              className="w-full p-2 border rounded"
+              placeholder="输入邮箱查询用户"
+            />
+          </div>
+          <button
+            onClick={handleQuery}
+            disabled={querying || !queryEmail}
+            className={`px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed`}
+          >
+            {querying ? '查询中...' : '查询'}
+          </button>
+        </div>
+        {queryResult && (
+          <div className="mt-2 p-3 bg-gray-50 rounded">
+            查询结果：{queryResult.name}
+          </div>
+        )}
+      </div>
+
       {/* 注册表单 */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-4">用户注册</h2>
