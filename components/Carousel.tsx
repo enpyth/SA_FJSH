@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from "@mui/material"
@@ -11,25 +11,24 @@ interface CarouselProps {
 }
 
 export default function Carousel({ images, fullWidth = false }: CarouselProps) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+
   if (!images || images.length === 0) {
-    console.log('No images provided to Carousel');
     return null;
   }
 
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-  }
+  }, [images.length])
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
-  }
+  }, [images.length])
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 5000)
     return () => clearInterval(interval)
-  }, [])
+  }, [nextSlide])
 
   return (
     <div className={`relative ${fullWidth ? 'w-screen' : 'w-full'} h-[400px]`}>

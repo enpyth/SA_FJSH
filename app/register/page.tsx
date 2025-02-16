@@ -49,7 +49,17 @@ export default function RegisterPage() {
         setError(data.error || '注册失败');
       }
     } catch (error) {
-      setError('注册过程中出现错误');
+      if (error instanceof Error) {
+        return new Response(JSON.stringify({ error: error.message }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      
+      return new Response(JSON.stringify({ error: 'An unknown error occurred' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
     } finally {
       setLoading(false);
     }

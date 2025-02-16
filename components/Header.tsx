@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from "@mui/material"
-import { Home, Info, User, FileText, Building2, Calendar, Delete, Files } from 'lucide-react'
+import { Home, Info, User, FileText, Building2, Calendar, Files } from 'lucide-react'
 
 const Header = () => {
   return (
