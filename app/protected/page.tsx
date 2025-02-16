@@ -3,6 +3,7 @@
 import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface UserProfile {
     email: string;
@@ -116,10 +117,18 @@ export default function ProtectedPage() {
                 <div className="bg-white shadow rounded-lg p-6">
                     <div className="flex items-center space-x-6 mb-6">
                         {profile?.logo ? (
-                            <img
+                            <Image
                                 src={profile.logo}
-                                alt="Profile"
-                                className="h-24 w-24 rounded-full object-cover"
+                                alt={profile.email}
+                                width={800}
+                                height={300}
+                                priority
+                                style={{
+                                    display: 'block',
+                                    width: '100%',
+                                    height: '300px',
+                                    objectFit: 'cover'
+                                }}
                             />
                         ) : (
                             <div className="h-24 w-24 rounded-full bg-gray-200 flex items-center justify-center">

@@ -63,6 +63,10 @@ news/[id]/page.tsx
 
 数据库行为应在服务端，不能在客户端
 
+## Error: React Hook "useCallback" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return? react-hooks/rules-of-hooks
+
+React Hooks 使用规则的问题。React Hooks 有一个重要的规则：它们必须在每次渲染时以相同的顺序被调用，不能在条件语句中使用。
+
 # TODO
 
 useState useEffect 使用

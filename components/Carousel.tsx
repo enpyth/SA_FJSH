@@ -13,10 +13,6 @@ interface CarouselProps {
 export default function Carousel({ images, fullWidth = false }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  if (!images || images.length === 0) {
-    return null;
-  }
-
   const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
   }, [images.length])
@@ -29,6 +25,10 @@ export default function Carousel({ images, fullWidth = false }: CarouselProps) {
     const interval = setInterval(nextSlide, 5000)
     return () => clearInterval(interval)
   }, [nextSlide])
+
+  if (!images || images.length === 0) {
+    return null;
+  }
 
   return (
     <div className={`relative ${fullWidth ? 'w-screen' : 'w-full'} h-[400px]`}>
@@ -105,4 +105,3 @@ export default function Carousel({ images, fullWidth = false }: CarouselProps) {
     </div>
   )
 }
-
