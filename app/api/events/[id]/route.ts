@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getEventById } from '@/src/queries/select';
 
-// 使用 NextRequest 类型并正确定义 context 参数
 export async function GET(
   request: Request,
   context: { params: { id: string } }
 ) {
   try {
-    const { id } = context.params;
+    const params = context.params;
+    const { id } = params;
+    
     const event = await getEventById(parseInt(id));
     
     if (!event) {
