@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const {id} = await params;
+    const { id } = params;
     const event = await getEventById(parseInt(id));
     
     if (!event) {
@@ -29,4 +29,4 @@ export async function GET(
       headers: { 'Content-Type': 'application/json' },
     });
   }
-} 
+}
