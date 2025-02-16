@@ -18,11 +18,18 @@ export async function GET(
     }
 
     return NextResponse.json(user);
-  } catch (error: any) {
-    return NextResponse.json({ 
-      message: 'Error fetching user',
-      error: error.message 
-    }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    
+    return new Response(JSON.stringify({ error: 'An unknown error occurred' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }
 
@@ -44,10 +51,17 @@ export async function DELETE(
     return NextResponse.json({
       message: 'User deleted successfully'
     });
-  } catch (error: any) {
-    return NextResponse.json({ 
-      message: 'Error deleting user',
-      error: error.message 
-    }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    
+    return new Response(JSON.stringify({ error: 'An unknown error occurred' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 } 

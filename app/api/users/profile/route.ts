@@ -20,10 +20,17 @@ export async function PUT(request: Request) {
       message: 'Profile updated successfully',
       profile: updatedProfile
     });
-  } catch (error: any) {
-    return NextResponse.json({ 
-      message: 'Error updating profile',
-      error: error.message 
-    }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    
+    return new Response(JSON.stringify({ error: 'An unknown error occurred' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 } 
