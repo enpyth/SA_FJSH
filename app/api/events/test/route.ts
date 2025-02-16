@@ -22,10 +22,17 @@ export async function GET() {
       message: 'Event created successfully',
       event: newEvent
     });
-  } catch (error: any) {
-    return NextResponse.json({ 
-      message: 'Error creating event',
-      error: error.message 
-    }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    
+    return new Response(JSON.stringify({ error: 'An unknown error occurred' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 } 

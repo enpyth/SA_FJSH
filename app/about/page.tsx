@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Grid, Avatar, Card, CardContent, Divider } from '@mui/material';
+import { Box, Container, Typography, Grid, Avatar, Card, CardContent } from '@mui/material';
 import { directors } from '@/data/about';
 
 export default function About() {

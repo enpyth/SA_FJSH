@@ -17,12 +17,18 @@ export async function GET(request: Request) {
     
     // console.log('API events:', events);
     return NextResponse.json(events);
-  } catch (error: any) {
-    console.error('API error:', error);
-    return NextResponse.json({ 
-      message: 'Error fetching events',
-      error: error.message 
-    }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    
+    return new Response(JSON.stringify({ error: 'An unknown error occurred' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }
 
@@ -36,10 +42,17 @@ export async function POST(request: Request) {
       message: 'Event created successfully',
       event: newEvent
     });
-  } catch (error: any) {
-    return NextResponse.json({ 
-      message: 'Error creating event',
-      error: error.message 
-    }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    
+    return new Response(JSON.stringify({ error: 'An unknown error occurred' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 } 
