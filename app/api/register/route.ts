@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     await insertUserProfile({ email });
 
     // 在解构 user 对象时使用不同的变量名
-    const { password: userPassword, ...userWithoutPassword } = user;
+    const {...userWithoutPassword } = user;
 
     return NextResponse.json({
       message: 'User registered successfully',
