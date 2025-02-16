@@ -37,6 +37,34 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ----------------
 
+# DB
+
 npx drizzle-kit generate
 
 npx drizzle-kit push
+
+# init data
+
+## add a event record
+
+http://localhost:3000/api/events/test
+
+## add many event records
+
+http://localhost:3000/events/create
+
+# Fix bug
+
+## Error: Route "/news/[id]" used `params.id`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+
+news/[id]/page.tsx
+
+## Error: DATABASE_URL is not set in environment variables
+
+数据库行为应在服务端，不能在客户端
+
+# TODO
+
+useState useEffect 使用
+
+在 schema 定义时就使用一致的命名规范，然后让所有接口和组件都遵循这个规范

@@ -15,6 +15,13 @@
       "when": 1739614758388,
       "tag": "0001_freezing_silver_sable",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1739674971296,
+      "tag": "0002_classy_korath",
+      "breakpoints": true
     }
   ]
 }
