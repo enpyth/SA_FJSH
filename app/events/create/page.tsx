@@ -82,12 +82,12 @@ export default async function CreateEventPage() {
       }
     ];
 
-    const newEvents = await insertManyEvents(events);
+    // const newEvents = await insertManyEvents(events);
     
-    console.log('成功创建活动:', newEvents.length, '条记录');
+    // console.log('成功创建活动:', newEvents.length, '条记录');
     
     // 创建成功后重定向到活动列表页
-    redirect('/events');
+    // redirect('/events');
   } catch (error) {
     console.error('创建活动失败:', error);
     throw error;

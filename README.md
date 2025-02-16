@@ -67,6 +67,10 @@ news/[id]/page.tsx
 
 React Hooks 使用规则的问题。React Hooks 有一个重要的规则：它们必须在每次渲染时以相同的顺序被调用，不能在条件语句中使用。
 
+## vercel 部署
+
+next.config.js 中配置 typescript 和 eslint 忽略错误
+
 # TODO
 
 useState useEffect 使用

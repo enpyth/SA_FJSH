@@ -3,7 +3,7 @@ import { getNews } from '@/data/news'
 import { getSponsors, getCarouselImages } from '@/data/home'
 
 export default async function Home() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   
   // Fetch data on the server side
   const eventsResponse = await fetch(`${baseUrl}/api/events?type=upcoming`, { 
