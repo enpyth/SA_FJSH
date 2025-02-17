@@ -2,12 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
-interface RegisterForm {
-  name: string;
-  email: string;
-  password: string;
-}
+import { FormField } from './components/FormField';
+import { RoleSelector } from './components/RoleSelector';
+import { ExtendedInfoForm } from './components/ExtendedInfoForm';
+import { RegisterForm } from './types';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -16,7 +14,8 @@ export default function RegisterPage() {
   const [form, setForm] = useState<RegisterForm>({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    role: 'regular'
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -49,17 +48,7 @@ export default function RegisterPage() {
         setError(data.error || '注册失败');
       }
     } catch (error) {
-      if (error instanceof Error) {
-        return new Response(JSON.stringify({ error: error.message }), {
-          status: 500,
-          headers: { 'Content-Type': 'application/json' },
-        });
-      }
-      
-      return new Response(JSON.stringify({ error: 'An unknown error occurred' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      setError(error instanceof Error ? error.message : '注册失败');
     } finally {
       setLoading(false);
     }
@@ -72,78 +61,60 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            创建新账户
-          </h2>
-        </div>
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          创建新账户
+        </h2>
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="rounded-md bg-red-50 p-4">
               <div className="text-sm text-red-700">{error}</div>
             </div>
           )}
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="name" className="sr-only">
-                姓名
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                value={form.name}
-                onChange={handleChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="姓名"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="sr-only">
-                邮箱地址
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={form.email}
-                onChange={handleChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="邮箱地址"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                密码
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                value={form.password}
-                onChange={handleChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="密码"
-              />
-            </div>
+
+          <RoleSelector value={form.role} onChange={handleChange} />
+
+          <div className="rounded-md shadow-sm space-y-3">
+            <FormField
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="昵称"
+              required
+            />
+            <FormField
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="邮箱地址"
+              required
+              autoComplete="email"
+            />
+            <FormField
+              name="password"
+              type="password"
+              value={form.password}
+              onChange={handleChange}
+              placeholder="密码"
+              required
+              autoComplete="new-password"
+            />
+
+            {(form.role === 'corporate' || form.role === 'sponsor') && (
+              <ExtendedInfoForm form={form} onChange={handleChange} />
+            )}
           </div>
 
-          <div>
-            <button
-              type="submit"
-              disabled={loading}
-              className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
-                loading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              {loading ? '注册中...' : '注册'}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            {loading ? '注册中...' : '注册'}
+          </button>
         </form>
       </div>
     </div>

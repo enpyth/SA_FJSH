@@ -1,0 +1,1 @@
+ALTER TABLE "fjsh_users_profile" ADD COLUMN "english_name" text;

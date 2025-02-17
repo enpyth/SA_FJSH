@@ -71,8 +71,11 @@ React Hooks 使用规则的问题。React Hooks 有一个重要的规则：它�
 
 next.config.js 中配置 typescript 和 eslint 忽略错误
 
+NEXT_PUBLIC_BASE_URL 在 .env.local 中配置值应根据实际远程地址进行配置，并不是localhost:3000，否则本地运行成功，部署后会报错。
+
 # TODO
 
 useState useEffect 使用
 
 在 schema 定义时就使用一致的命名规范，然后让所有接口和组件都遵循这个规范
+

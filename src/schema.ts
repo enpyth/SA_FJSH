@@ -13,6 +13,19 @@ export const usersProfileTable = pgTable('fjsh_users_profile', {
     .references(() => usersAuthTable.email, { onDelete: 'cascade' }),
   logo: text('logo'),
   introduction: text('introduction'),
+  chineseName: text('chinese_name'),
+  englishName: text('english_name'),
+  driverLicenseNo: text('driver_license_no'),
+  birthplace: text('birthplace'),
+  wechatId: text('wechat_id'),
+  birthDate: text('birth_date'),
+  address: text('address'),
+  phoneNumber: text('phone_number'),
+  occupation: text('occupation'),
+  companyName: text('company_name'),
+  companyAddress: text('company_address'),
+  referrer: text('referrer'),
+  role: text('role'),
 });
 
 export const eventStatusEnum = pgEnum('event_status', ['upcoming', 'past']);
