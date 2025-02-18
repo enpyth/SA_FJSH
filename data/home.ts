@@ -1,15 +1,27 @@
 export async function getCarouselImages() {
     return [
         {
-            src: '/placeholder.svg?height=400&width=800',
+            src: '/carousel/carousel0.png',
             alt: '占位符图片'
         },
         {
-            src: '/placeholder.svg?height=400&width=800',
+            src: '/carousel/carousel1.jpg',
             alt: '占位符图片'
         },
         {
-            src: '/placeholder.svg?height=400&width=800',
+            src: '/carousel/carousel2.jpg',
+            alt: '占位符图片'
+        },
+        {
+            src: '/carousel/carousel3.jpg',
+            alt: '占位符图片'
+        },
+        {
+            src: '/carousel/carousel4.jpg',
+            alt: '占位符图片'
+        },
+        {
+            src: '/carousel/carousel5.jpg',
             alt: '占位符图片'
         }
     ];

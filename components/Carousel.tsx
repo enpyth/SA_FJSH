@@ -22,7 +22,7 @@ export default function Carousel({ images, fullWidth = false }: CarouselProps) {
   }, [images.length])
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000)
+    const interval = setInterval(nextSlide, 4000)
     return () => clearInterval(interval)
   }, [nextSlide])
 
@@ -31,13 +31,12 @@ export default function Carousel({ images, fullWidth = false }: CarouselProps) {
   }
 
   return (
-    <div className={`relative ${fullWidth ? 'w-screen' : 'w-full'} h-[400px]`}>
+    <div className={`relative ${fullWidth ? 'w-screen' : 'w-full'} h-[500px]`}>
       {images.map((image, index) => (
         <div
           key={index}
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ${
-            index === currentIndex ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ${index === currentIndex ? 'opacity-100' : 'opacity-0'
+            }`}
         >
           <Image
             src={image.src}
@@ -95,9 +94,8 @@ export default function Carousel({ images, fullWidth = false }: CarouselProps) {
         {images.map((_, index) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full ${
-              index === currentIndex ? 'bg-white' : 'bg-gray-400'
-            }`}
+            className={`w-3 h-3 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-gray-400'
+              }`}
             onClick={() => setCurrentIndex(index)}
           />
         ))}
