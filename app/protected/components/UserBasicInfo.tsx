@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Session } from 'next-auth';
 import { UserProfile } from '../types';
-import { Button, Link } from '@mui/material';
+import { Button, Link, Box, Typography, Tooltip } from '@mui/material';
 
 interface UserBasicInfoProps {
     session: Session;
@@ -9,6 +9,28 @@ interface UserBasicInfoProps {
 }
 
 export function UserBasicInfo({ session, profile }: UserBasicInfoProps) {
+    const tooltipContent = (
+        <Box sx={{ p: 1 }}>
+            <Typography variant="body2" sx={{ mb: 1 }}>
+                会员年费：$50 AUD
+            </Typography>
+            
+            <Typography variant="body2" sx={{ mb: 1 }}>
+                银行账户信息：
+            </Typography>
+            
+            <Typography variant="body2" sx={{ ml: 1, mb: 1 }}>
+                Account Name: Australia Fujian Business Council Incorporated<br />
+                BSB: 065-005<br />
+                Account Number: 107-770-99
+            </Typography>
+            
+            <Typography variant="body2">
+                缴纳年度会费并通过审核后成为企业会员
+            </Typography>
+        </Box>
+    );
+
     return (
         <div className="flex items-center justify-between p-5">
             <div className="flex items-center space-x-6">
@@ -42,13 +64,14 @@ export function UserBasicInfo({ session, profile }: UserBasicInfoProps) {
                     <p className="text-gray-600 mt-1">
                         身份：{profile?.role === 'regular' ? '普通会员' :
                             profile?.role?.includes('corporate') ? '企业会员' :
+                            profile?.role === 'core' ? '理事' :
                                 profile?.role?.includes('sponsor') ? '赞助商' : '未知'}
                     </p>
                 </div>
             </div>
 
-            {profile?.role?.includes('checked') ? (
-                <Link href="/enterprises"><Button
+            {profile?.role?.includes('checked')? (
+                <Link href="/"><Button
                     variant="outlined"
                     size="small"
                     color="success"
@@ -56,15 +79,39 @@ export function UserBasicInfo({ session, profile }: UserBasicInfoProps) {
                 >
                     审核通过
                 </Button></Link>
-            ) : (
-                <Button
+            ) : profile?.role === 'core'? (
+                <Link href="/meetings"><Button
                     variant="outlined"
                     size="small"
-                    disabled
+                    color="success"
                     sx={{ minWidth: '100px' }}
                 >
-                    审核中
-                </Button>
+                    理事会议
+                </Button></Link>
+            ) : (
+                <Tooltip 
+                    title={tooltipContent}
+                    arrow
+                    placement="bottom"
+                    sx={{
+                        '& .MuiTooltip-tooltip': {
+                            bgcolor: 'background.paper',
+                            color: 'text.primary',
+                            boxShadow: 1,
+                            fontSize: '0.875rem',
+                            maxWidth: 'none'
+                        }
+                    }}
+                >
+                    <Button
+                        variant="outlined"
+                        size="small"
+                        color='inherit'
+                        sx={{ minWidth: '100px' }}
+                    >
+                        审核中
+                    </Button>
+                </Tooltip>
             )}
         </div>
     );
