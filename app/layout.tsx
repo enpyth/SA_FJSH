@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: '南澳福建商会',
-  description: '南澳福建商会为会员提供全面服务的商会平台',
+  title: '澳洲福建商会',
+  description: '澳洲福建商会为会员提供全面服务的商会平台',
 }
 
 export default function RootLayout({
