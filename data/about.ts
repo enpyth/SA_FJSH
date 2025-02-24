@@ -19,7 +19,7 @@ export const directors = [
   },
   {
     name: "李琰波",
-    role: "副会长兼秘书长",
+    role: "副会长",
     // company: "暂无",
     // description: "李琰波先生是商会的副会长兼秘书长，负责统筹管理商会的日常事务，并在协调各方关系方面展现出极高的领导能力。",
     // phone: "+61 433358168",
@@ -37,7 +37,7 @@ export const directors = [
   },
   {
     name: "徐琳",
-    role: "副秘书长",
+    role: "秘书长",
     // company: "暂无",
     // description: "徐琳女士是商会的副秘书长，负责商会的行政支持工作，并在组织管理方面有着丰富的经验。",
     // phone: "+61 452127789",
