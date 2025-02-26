@@ -7,15 +7,13 @@ import { ArrowBack } from '@mui/icons-material';
 import Link from 'next/link';
 import Markdown from 'react-markdown';
 import { MeetingInfo } from '../components/MeetingInfo';
-import { getServerSession } from "next-auth";
 import { directors } from "@/data/about";
+import { auth } from "@/lib/auth";
 
 export default async function MeetingDetail({ params }: { params: Promise<{ id: string }> | { id: string } }) {
-  // 验证用户是否已登录
-  const session = await getServerSession();
-  
+  const session = await auth();
   if (!session) {
-    redirect('/login');
+    return redirect('/login');
   }
 
   // 验证用户是否是理事会成员

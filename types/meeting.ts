@@ -6,4 +6,4 @@ export interface Meeting {
     address?: string;
     summary?: string;
     file?: string;
-}
+} 

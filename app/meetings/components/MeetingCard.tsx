@@ -1,15 +1,6 @@
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import { CalendarToday, AccessTime, Description, LocationOn } from '@mui/icons-material';
-
-interface Meeting {
-    id: string;
-    title: string;
-    date: string;
-    time?: string;
-    address?: string;
-    summary?: string;
-    file?: string;
-}
+import { Meeting } from '@/types/meeting';
 
 interface MeetingCardProps {
     meeting: Meeting;

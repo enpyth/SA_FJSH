@@ -1,19 +1,17 @@
-import { NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
-import type { NextRequest } from 'next/server';
+// Protecting routes with next-auth
+// https://next-auth.js.org/configuration/nextjs#middleware
+// https://nextjs.org/docs/app/building-your-application/routing/middleware
 
-export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
-  
-  if (!token) {
-    const url = new URL('/login', request.url);
-    url.searchParams.set('callbackUrl', request.url);
-    return NextResponse.redirect(url);
+import NextAuth from 'next-auth';
+import authConfig from '@/lib/auth.config';
+
+const { auth } = NextAuth(authConfig);
+
+export default auth((req) => {
+  if (!req.auth) {
+    const url = req.url.replace(req.nextUrl.pathname, '/login');
+    return Response.redirect(url);
   }
-  
-  return NextResponse.next();
-}
+});
 
-export const config = {
-  matcher: ['/protected/:path*']
-}; 
+export const config = { matcher: ['/meetings/:path*'] };
